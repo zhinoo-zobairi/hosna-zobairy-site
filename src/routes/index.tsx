@@ -4,6 +4,7 @@ import { getSiteContent } from "@/server/content";
 import { useMotionOk } from "@/lib/use-motion-ok";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
+import { Statement } from "@/components/site/Statement";
 import { useLang } from "@/components/site/use-lang";
 
 export const Route = createFileRoute("/")({
@@ -31,6 +32,7 @@ function Home() {
       <Header text={text} lang={lang} onLang={setLang} />
       <main>
         <Hero {...chapter} />
+        <Statement {...chapter} />
       </main>
     </div>
   );
