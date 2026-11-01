@@ -3,7 +3,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { INSTAGRAM, LANG_KEY, PHONE, PROCEDURE_SLUGS, type Lang } from "@/content/constants";
 import { defaultContent } from "@/content/default";
 import { stills } from "@/content/stills";
-import { LanguageMenu } from "./index";
+import { LanguageMenu } from "@/components/site/LanguageMenu";
 
 const copy = defaultContent;
 
@@ -56,7 +56,7 @@ function ProcedurePage() {
           >
             {text.instagram}
           </a>
-          <LanguageMenu lang={lang} onChange={chooseLang} />
+          <LanguageMenu text={text} lang={lang} onChange={chooseLang} />
           <a
             href={`tel:${PHONE}`}
             className={`inline-flex min-h-11 items-center border border-ink px-3 text-[11px] font-medium text-ink sm:px-5 sm:text-xs ${
