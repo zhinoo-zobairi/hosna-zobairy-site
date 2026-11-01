@@ -147,15 +147,24 @@ function ContentEditor() {
   );
 }
 
-function Field(props: { path: Path; label?: string; lang?: Lang; multiline?: boolean; optional?: boolean; ltr?: boolean }) {
+function Field(props: {
+  path: Path;
+  label?: string;
+  ariaLabel?: string;
+  lang?: Lang;
+  multiline?: boolean;
+  optional?: boolean;
+  ltr?: boolean;
+}) {
   const { draft, errors, update } = useEditor();
-  const { path, label, lang, multiline, optional, ltr } = props;
+  const { path, label, ariaLabel, lang, multiline, optional, ltr } = props;
   const error = errors[path.join(".")];
   const rtl = lang === "ku" && !ltr;
   const control = {
     value: (getIn(draft, path) as string | undefined) ?? "",
     dir: rtl ? ("rtl" as const) : undefined,
     lang: lang === "ku" ? "ckb" : lang,
+    "aria-label": ariaLabel,
     "aria-invalid": error ? true : undefined,
     className: `${inputClass} ${rtl ? "font-arabic-sans" : ""} ${error ? "border-red-700" : ""}`,
     onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -192,7 +201,12 @@ function PairRow({ label, path, multiline }: { label: string; path: Path; multil
       {LANGS.map((lang) => (
         <div key={lang}>
           <span className="mb-1 block text-xs text-muted uppercase md:hidden">{lang}</span>
-          <Field path={[lang, ...path]} lang={lang} multiline={multiline} />
+          <Field
+            path={[lang, ...path]}
+            lang={lang}
+            ariaLabel={`${label} (${lang.toUpperCase()})`}
+            multiline={multiline}
+          />
         </div>
       ))}
     </div>
