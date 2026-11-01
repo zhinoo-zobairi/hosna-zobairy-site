@@ -25,6 +25,10 @@ export const auth = betterAuth({
   rateLimit: {
     enabled: true,
     storage: "database",
+    // Better Auth's database storage deletes counters older than the base window
+    // whenever any window resets, so a 10 s base window would erase the 900 s
+    // sign-in counter. Base window 900 s keeps it; other endpoints get 100 per 15 min.
+    window: 900,
     customRules: { "/sign-in/email": { window: 900, max: 5 } },
   },
   // Bridges Better Auth's Set-Cookie into TanStack Start responses. Must stay last.
