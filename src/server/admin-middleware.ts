@@ -1,5 +1,7 @@
 import { createMiddleware, createServerFn } from "@tanstack/react-start";
 
+export const UNAUTHORIZED = "Unauthorized";
+
 /** Signed-in admin's email from the Better Auth session cookie, or null. Marks the response no-store. */
 async function readAdminEmail(): Promise<string | null> {
   // Dynamic imports keep server-only modules out of the client bundle.
@@ -14,14 +16,15 @@ async function readAdminEmail(): Promise<string | null> {
 /**
  * For admin server functions: 401 without a session, else adds `context.adminEmail`.
  * Every user is an admin: sign-up is disabled, users come only from scripts/create-admin.mjs.
+ * Throws an Error (not a Response): Start then answers with the 401 status set here and the
+ * client call rejects, instead of resolving with a raw Response.
  */
 export const adminMiddleware = createMiddleware({ type: "function" }).server(async ({ next }) => {
   const adminEmail = await readAdminEmail();
   if (!adminEmail) {
-    throw new Response("Unauthorized", {
-      status: 401,
-      headers: { "Content-Type": "text/plain", "Cache-Control": "no-store" },
-    });
+    const { setResponseStatus } = await import("@tanstack/react-start/server");
+    setResponseStatus(401);
+    throw new Error(UNAUTHORIZED);
   }
   return next({ context: { adminEmail } });
 });
