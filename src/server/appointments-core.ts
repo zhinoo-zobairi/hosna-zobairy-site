@@ -7,7 +7,7 @@ import {
   type SubmitAppointmentResult,
 } from "./appointment-schema.ts";
 import { sendClinicEmail } from "./email.ts";
-import { hashIp } from "./ip-hash.ts";
+import { hashIp, ipBucket } from "./ip-hash.ts";
 import { checkAndRecord } from "./rate-limit.ts";
 
 /** Approved: 5 requests per hour per IP. */
@@ -39,7 +39,7 @@ export async function submitAppointmentCore(
 
   let row: AppointmentRow;
   try {
-    if (!(await checkAndRecord(sql, `appt:${hashIp(ip, secret)}`, FORM_LIMIT))) {
+    if (!(await checkAndRecord(sql, `appt:${hashIp(ipBucket(ip), secret)}`, FORM_LIMIT))) {
       return { ok: false, error: "rate_limited" };
     }
     [row] = await sql<AppointmentRow>`
