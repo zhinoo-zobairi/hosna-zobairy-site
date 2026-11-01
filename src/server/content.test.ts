@@ -84,7 +84,7 @@ test("restore copies the old version as the new latest row", async () => {
   assert.equal(restored.ok, true);
   assert.deepEqual(await getLatestContent(sql), defaultContent);
   const { versions } = await getContentForEditCore(sql);
-  assert.equal(versions.length, 3);
+  assert.equal(versions.length, 4); // seed, first, edited, restored
   assert.equal(versions[0].created_by, "other@example.test");
   assert.deepEqual(await restoreContentVersionCore(sql, 9999, "admin@example.test"), { ok: false });
 });
