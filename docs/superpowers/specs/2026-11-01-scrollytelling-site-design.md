@@ -37,6 +37,9 @@ Turn the Grok Build export into a site we host ourselves:
 | 13 | Admin language | English only |
 | 14 | Deploy flow | Private GitHub repo, with Vercel deploying automatically on every push to `main` |
 | 15 | Grok cleanup | Remove all Grok platform pieces (list below) |
+| 16 | Login limit fix | Better Auth base `rateLimit.window: 900`, because its database storage prunes counters older than the base window. Other auth endpoints get 100 requests per 15 min per IP. |
+| 17 | Email timeout | 5 s (`AbortSignal.timeout(5000)`). The request is saved either way. |
+| 18 | Region | Vercel's default function region (US East, `iad1`), with Neon in AWS us-east-1 |
 
 ## Architecture
 
