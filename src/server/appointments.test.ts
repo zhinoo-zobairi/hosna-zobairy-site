@@ -43,6 +43,14 @@ test("a bad phone returns invalid", async () => {
   assert.equal((await rows(sql)).length, 0);
 });
 
+test("digits from other scripts are rejected", async () => {
+  const { sql } = await createTestDb();
+  for (const phone of ["０９１２３４５６７８", "०९१२३४५६७८", "\u{1D7CE}\u{1D7CF}\u{1D7D0}\u{1D7D1}\u{1D7D2}"]) {
+    assert.deepEqual(await submitAppointmentCore(sql, { ...valid, phone }, opts), { ok: false, error: "invalid" });
+  }
+  assert.equal((await rows(sql)).length, 0);
+});
+
 test("Persian and Arabic-Indic digits are stored as ASCII", async () => {
   assert.equal(toAsciiDigits("۰۱۲۳۴۵۶۷۸۹ ٠١٢٣٤٥٦٧٨٩"), "0123456789 0123456789");
   const { sql } = await createTestDb();

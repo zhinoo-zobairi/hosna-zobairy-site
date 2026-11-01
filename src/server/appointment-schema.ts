@@ -5,7 +5,7 @@ export const PREFERRED_DAYS = ["any", "sat", "sun", "tue"] as const;
 export const APPOINTMENT_STATUSES = ["new", "contacted", "done"] as const;
 export type AppointmentStatus = (typeof APPOINTMENT_STATUSES)[number];
 
-/** Shared by the form (client hints) and the server (the real check). Digits may be Persian or Arabic-Indic. */
+/** Shared by the form (client hints) and the server (the real check). Phone digits may be ASCII, Arabic-Indic or Persian, nothing else. */
 export const appointmentInputSchema = z.object({
   name: z.string().trim().min(1).max(120),
   phone: z
@@ -13,7 +13,7 @@ export const appointmentInputSchema = z.object({
     .trim()
     .min(5)
     .max(40)
-    .regex(/^[+\p{Nd}\s()-]+$/u),
+    .regex(/^[+0-9٠-٩۰-۹\s()-]+$/),
   procedure: z.enum([...PROCEDURE_SLUGS, "other"]),
   preferredDay: z.enum(PREFERRED_DAYS),
   note: z.string().trim().max(1000).optional(),
