@@ -6,6 +6,8 @@ import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { Statement } from "@/components/site/Statement";
 import { Practice } from "@/components/site/Practice";
+import { Training } from "@/components/site/Training";
+import { Publications } from "@/components/site/Publications";
 import { useLang } from "@/components/site/use-lang";
 
 export const Route = createFileRoute("/")({
@@ -35,6 +37,8 @@ function Home() {
         <Hero {...chapter} />
         <Statement {...chapter} />
         <Practice {...chapter} />
+        <Training {...chapter} />
+        <Publications {...chapter} papers={content.papers} />
       </main>
     </div>
   );
