@@ -2,6 +2,7 @@ import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-r
 import appCss from "../styles.css?url";
 
 const APP_NAME = "Dr. Hosna Zobairy";
+const DESCRIPTION = "Dr. Hosna Zobairy — nose and facial plastic surgery in Sna.";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -9,21 +10,17 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: APP_NAME },
-      {
-        name: "description",
-        content: "Dr. Hosna Zobairy — nose and facial plastic surgery in Sna.",
-      },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:title", content: APP_NAME },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:image", content: "https://hosnazobairy.com/og.jpg" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#f3f1ee" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Noto+Naskh+Arabic:wght@500;600&family=Noto+Sans+Arabic:wght@400;500&family=Outfit:wght@300;400;500&display=swap",
-      },
     ],
   }),
   component: () => (
