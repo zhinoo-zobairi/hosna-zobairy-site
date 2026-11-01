@@ -23,11 +23,11 @@ gh repo create hosna-zobairy-site --private --source . --push
 
 1. In the project, open the **Storage** tab and click **Create Database**. Choose **Neon**, then the **Free** plan.
 2. Pick the **AWS US East 1 (N. Virginia)** region so the database sits next to Vercel's default function region (Washington, D.C., `iad1`).
-3. Connect it to this project for **Production**, **Preview** and **Development**. This adds `DATABASE_URL` for you.
+3. Connect it to this project for **Production only**. Untick Preview and Development. This adds `DATABASE_URL` for you. Every build runs the migrations, so a preview of an unmerged branch must never reach the real database or the real patient requests. Previews show the bundled text, and their form and admin don't work.
 
 ## 4. Add the other settings (you)
 
-Go to **Settings → Environment Variables** and add these for **Production** and **Preview**:
+Go to **Settings → Environment Variables** and add these for **Production** only:
 
 | Name | Value |
 |---|---|
