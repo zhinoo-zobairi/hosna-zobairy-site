@@ -4,7 +4,7 @@ import { useScrollProgress } from "@/lib/use-scroll-progress";
 import { ramp, scrollToProgress } from "./motion";
 import { display, kicker, sans, type ChapterProps } from "./type";
 
-const PORTRAIT = "/portrait.png";
+const PORTRAIT = "/portrait.jpg";
 
 export function Hero({ text, lang, motion }: ChapterProps) {
   const ku = lang === "ku";
