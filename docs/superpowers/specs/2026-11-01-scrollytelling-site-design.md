@@ -40,6 +40,7 @@ Turn the Grok Build export into a site we host ourselves:
 | 16 | Login limit fix | Better Auth base `rateLimit.window: 900`, because its database storage prunes counters older than the base window. Other auth endpoints get 100 requests per 15 min per IP. |
 | 17 | Email timeout | 5 s (`AbortSignal.timeout(5000)`). The request is saved either way. |
 | 18 | Region | Vercel's default function region (US East, `iad1`), with Neon in AWS us-east-1 |
+| 19 | Clinic email content | A ping only: subject "New appointment request" and a link to `/admin`. No name, phone, procedure or note, so the 12-month purge covers every copy of patient data. |
 
 ## Architecture
 
@@ -48,7 +49,7 @@ Browser
   │  GET /            route loader ─► getSiteContent() ─► content_versions (latest) ─┐
   │                                                     └─ on error: bundled default  │
   │  POST form        submitAppointment() ─► rate_limits check ─► appointment_requests
-  │                                       └► Resend email to CLINIC_EMAIL (failure is logged, not fatal)
+  │                                       └► Resend ping to CLINIC_EMAIL, no patient data (failure is logged, not fatal)
   │  /admin/*         Better Auth session ─► admin server functions
   ▼
 Vercel (TanStack Start + Nitro, preset "vercel") ─► Neon Postgres
