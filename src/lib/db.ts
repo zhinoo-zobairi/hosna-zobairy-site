@@ -176,6 +176,11 @@ async function createSql(): Promise<Sql> {
         "or a server route loader, never from client code.",
     );
   }
+  if (dbSource === "pglite" && import.meta.env?.PROD) {
+    // Production never falls back to PGLite: a missing DATABASE_URL is a
+    // misconfiguration. Callers fail, and public pages serve bundled content.
+    throw new Error("DATABASE_URL is not set");
+  }
   return dbSource === "neon" ? createNeonSql() : createPgliteSql();
 }
 
@@ -229,7 +234,7 @@ export function ensureDbReady(): Promise<void> {
 const globalBoot = globalThis as typeof globalThis & {
   __pgBootstrapPromise__?: Promise<void>;
 };
-if (typeof window === "undefined" && dbSource === "pglite") {
+if (typeof window === "undefined" && dbSource === "pglite" && !import.meta.env?.PROD) {
   globalBoot.__pgBootstrapPromise__ ??= ensureDbReady().catch((err) => {
     globalBoot.__pgBootstrapPromise__ = undefined;
     console.error("[db] PGLite bootstrap failed:", err);
