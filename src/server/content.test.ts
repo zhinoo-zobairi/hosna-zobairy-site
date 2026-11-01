@@ -15,10 +15,19 @@ test("an empty table returns the default content", async () => {
   assert.deepEqual(await getLatestContent(sql), defaultContent);
 });
 
-test("a corrupt latest row returns the default content", async () => {
+test("a corrupt only row returns the default content", async () => {
   const { sql } = await createTestDb();
   await sql`insert into content_versions (created_by, content) values ('seed', '{"en": "broken"}'::jsonb)`;
   assert.deepEqual(await getLatestContent(sql), defaultContent);
+});
+
+test("a corrupt latest row falls back to the newest valid version", async () => {
+  const { sql } = await createTestDb();
+  const edited = structuredClone(defaultContent);
+  edited.en.line = "Edited line";
+  await saveContentCore(sql, edited, "admin@example.test");
+  await sql`insert into content_versions (created_by, content) values ('seed', '{"en": "broken"}'::jsonb)`;
+  assert.equal((await getLatestContent(sql)).en.line, "Edited line");
 });
 
 test("a failing database returns the default content instead of throwing", async () => {

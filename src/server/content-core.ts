@@ -6,15 +6,16 @@ import type { Sql } from "../lib/db.ts";
 export type ContentVersion = { id: number; created_at: Date; created_by: string };
 export type RestoreResult = { ok: true; id: number } | { ok: false };
 
-/** Latest saved content. The bundled default when the table is empty, the row is invalid, or the query fails. Never throws. */
+/** Newest saved content that passes the schema. The bundled default when there is none or the query fails. Never throws. */
 export async function getLatestContent(sql: Sql): Promise<SiteContent> {
   try {
-    const [row] = await sql<{ id: number; content: unknown }>`
-      select id, content from content_versions order by id desc limit 1`;
-    if (!row) return defaultContent;
-    const parsed = siteContentSchema.safeParse(row.content);
-    if (parsed.success) return parsed.data;
-    console.error(`[content] version ${row.id} does not match the schema; serving the default`);
+    const rows = await sql<{ id: number; content: unknown }>`
+      select id, content from content_versions order by id desc limit 20`;
+    for (const row of rows) {
+      const parsed = siteContentSchema.safeParse(row.content);
+      if (parsed.success) return parsed.data;
+      console.error(`[content] version ${row.id} does not match the schema; trying the previous one`);
+    }
   } catch (err) {
     console.error(`[content] reading content failed: ${err instanceof Error ? err.message : "unknown error"}`);
   }
