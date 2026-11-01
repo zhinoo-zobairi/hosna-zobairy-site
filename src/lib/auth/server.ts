@@ -30,3 +30,14 @@ export const auth = betterAuth({
   // Bridges Better Auth's Set-Cookie into TanStack Start responses. Must stay last.
   plugins: [tanstackStartCookies()],
 });
+
+/**
+ * Resolves once auth can serve requests. In dev on PGlite (which resets on restart and
+ * cannot be reached by a separate script) it first creates the local dev admin.
+ */
+export const authReady: Promise<void> =
+  import.meta.env.DEV && dbSource === "pglite"
+    ? import("./dev-admin")
+        .then(({ ensureDevAdmin }) => ensureDevAdmin(auth))
+        .catch((err: unknown) => console.error("[auth] Dev admin setup failed:", err))
+    : Promise.resolve();
