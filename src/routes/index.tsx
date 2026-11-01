@@ -5,6 +5,7 @@ import { useMotionOk } from "@/lib/use-motion-ok";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { Statement } from "@/components/site/Statement";
+import { Practice } from "@/components/site/Practice";
 import { useLang } from "@/components/site/use-lang";
 
 export const Route = createFileRoute("/")({
@@ -33,6 +34,7 @@ function Home() {
       <main>
         <Hero {...chapter} />
         <Statement {...chapter} />
+        <Practice {...chapter} />
       </main>
     </div>
   );
