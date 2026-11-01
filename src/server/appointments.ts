@@ -1,32 +1,50 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { LANGS, PROCEDURE_SLUGS } from "../content/constants.ts";
+import { appSecret } from "@/lib/auth/secret";
+import { getSql } from "@/lib/db";
+import { adminMiddleware } from "./admin-middleware";
+import {
+  APPOINTMENT_STATUSES,
+  type AppointmentInput,
+  type SubmitAppointmentResult,
+} from "./appointment-schema.ts";
+import {
+  deleteAppointmentCore,
+  listAppointmentsCore,
+  setAppointmentStatusCore,
+  submitAppointmentCore,
+} from "./appointments-core.ts";
+import { clientIp } from "./ip-hash.ts";
 
-export const PREFERRED_DAYS = ["any", "sat", "sun", "tue"] as const;
+export { PREFERRED_DAYS, appointmentInputSchema } from "./appointment-schema.ts";
+export type { AppointmentInput, AppointmentRow, SubmitAppointmentResult } from "./appointment-schema.ts";
 
-/** Shared by the form (client hints) and the server (the real check). Digits may be Persian or Arabic-Indic. */
-export const appointmentInputSchema = z.object({
-  name: z.string().trim().min(1).max(120),
-  phone: z
-    .string()
-    .trim()
-    .min(5)
-    .max(40)
-    .regex(/^[+\p{Nd}\s()-]+$/u),
-  procedure: z.enum([...PROCEDURE_SLUGS, "other"]),
-  preferredDay: z.enum(PREFERRED_DAYS),
-  note: z.string().trim().max(1000).optional(),
-  lang: z.enum(LANGS),
-  /** Honeypot. Real visitors never see or fill it. */
-  website: z.string().max(200).optional(),
-});
-
-export type AppointmentInput = z.infer<typeof appointmentInputSchema>;
-export type SubmitAppointmentResult =
-  | { ok: true }
-  | { ok: false; error: "invalid" | "rate_limited" | "server" };
-
-/** Public. The handler validates itself so bad input returns `invalid` instead of throwing. Stub: always `server`. */
+/** Public. The handler validates itself so bad input returns `invalid` instead of throwing. */
 export const submitAppointment = createServerFn({ method: "POST" })
   .inputValidator((data: AppointmentInput) => data)
-  .handler(async (): Promise<SubmitAppointmentResult> => ({ ok: false, error: "server" }));
+  .handler(async ({ data }): Promise<SubmitAppointmentResult> => {
+    const { getRequestHeaders, setResponseHeader } = await import("@tanstack/react-start/server");
+    setResponseHeader("Cache-Control", "no-store");
+    try {
+      const sql = await getSql();
+      return await submitAppointmentCore(sql, data, { ip: clientIp(getRequestHeaders()), secret: appSecret() });
+    } catch (err) {
+      console.error(`[appointments] submit failed: ${err instanceof Error ? err.message : "unknown error"}`);
+      return { ok: false, error: "server" };
+    }
+  });
+
+/** Admin. Purges requests older than 12 months, then lists the rest newest first. */
+export const listAppointments = createServerFn({ method: "GET" })
+  .middleware([adminMiddleware])
+  .handler(async () => listAppointmentsCore(await getSql()));
+
+export const setAppointmentStatus = createServerFn({ method: "POST" })
+  .middleware([adminMiddleware])
+  .inputValidator(z.object({ id: z.uuid(), status: z.enum(APPOINTMENT_STATUSES) }))
+  .handler(async ({ data }) => setAppointmentStatusCore(await getSql(), data));
+
+export const deleteAppointment = createServerFn({ method: "POST" })
+  .middleware([adminMiddleware])
+  .inputValidator(z.object({ id: z.uuid() }))
+  .handler(async ({ data }) => deleteAppointmentCore(await getSql(), data));
