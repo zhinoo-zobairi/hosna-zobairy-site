@@ -90,7 +90,7 @@ function PracticePinned({ text, lang }: { text: Copy; lang: Lang }) {
 
   return (
     <div ref={track} className="relative" style={{ height: `calc(100svh + ${count * STEP}svh)` }}>
-      <div className="sticky top-stage grid h-stage grid-cols-[minmax(0,5fr)_minmax(0,7fr)] items-center gap-12 px-12 xl:gap-20 xl:px-20">
+      <div className="sticky top-stage grid h-stage grid-cols-[minmax(0,5fr)_minmax(0,7fr)] items-center gap-12 px-20 xl:gap-20">
         <div className="min-w-0">
           <h2 className={kicker(ku)}>{text.practice}</h2>
           <div className="mt-8 flex items-center gap-4">

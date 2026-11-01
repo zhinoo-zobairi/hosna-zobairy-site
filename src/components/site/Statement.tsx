@@ -28,7 +28,7 @@ function StatementPinned({ statement, type }: { statement: string; type: string 
 
   return (
     <section ref={track} className="relative border-t border-line" style={{ height: "200svh" }}>
-      <div className="sticky top-stage flex h-stage items-center px-12 xl:px-20">
+      <div className="sticky top-stage flex h-stage items-center px-20">
         <p className={`max-w-5xl ${type}`}>
           {words.map((word, index) => (
             <Fragment key={index}>
