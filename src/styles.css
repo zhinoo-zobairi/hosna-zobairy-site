@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@import "@fontsource-variable/newsreader/opsz.css";
+@import "@fontsource-variable/outfit/index.css";
+@import "@fontsource-variable/noto-naskh-arabic/index.css";
+@import "@fontsource-variable/noto-sans-arabic/index.css";
 
 @theme {
   --color-paper: #f3f1ee;
@@ -7,10 +11,10 @@
   --color-navy: #1e2a44;
   --color-line: #e3dfd8;
   --color-photo: #e4e2de;
-  --font-display: "Newsreader", "Iowan Old Style", Palatino, serif;
-  --font-sans: "Outfit", "Avenir Next", sans-serif;
-  --font-arabic: "Noto Naskh Arabic", "Noto Sans Arabic", serif;
-  --font-arabic-sans: "Noto Sans Arabic", sans-serif;
+  --font-display: "Newsreader Variable", "Iowan Old Style", Palatino, serif;
+  --font-sans: "Outfit Variable", "Avenir Next", sans-serif;
+  --font-arabic: "Noto Naskh Arabic Variable", "Noto Sans Arabic Variable", serif;
+  --font-arabic-sans: "Noto Sans Arabic Variable", sans-serif;
   --tracking-kicker: 0.18em;
 }
 
