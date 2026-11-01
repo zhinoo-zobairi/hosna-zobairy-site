@@ -26,7 +26,7 @@ export function AppointmentForm({ text, lang }: { text: Copy; lang: Lang }) {
       preferredDay: value("preferredDay"),
       note: value("note") || undefined,
       lang,
-      website: value("website"),
+      website: value("contact_ref"),
     });
     if (!parsed.success) {
       setStatus("invalid");
@@ -103,7 +103,7 @@ export function AppointmentForm({ text, lang }: { text: Copy; lang: Lang }) {
       </div>
 
       {/* Honeypot: hidden from people and assistive tech, still filled in by naive bots. */}
-      <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="sr-only" />
+      <input name="contact_ref" tabIndex={-1} autoComplete="off" aria-hidden="true" className="sr-only" />
 
       <button
         type="submit"
