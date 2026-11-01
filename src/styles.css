@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f3f1ee;
+  --color-ink: #1c1917;
+  --color-muted: #6f675f;
+  --color-navy: #1e2a44;
+  --color-line: #e3dfd8;
+  --color-photo: #e4e2de;
+  --font-display: "Newsreader", "Iowan Old Style", Palatino, serif;
+  --font-sans: "Outfit", "Avenir Next", sans-serif;
+  --font-arabic: "Noto Naskh Arabic", "Noto Sans Arabic", serif;
+  --font-arabic-sans: "Noto Sans Arabic", sans-serif;
+  --tracking-kicker: 0.18em;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1 {
+    text-wrap: balance;
+  }
+}
+
+@utility min-h-hero {
+  min-height: calc(100svh - 4.75rem);
+}
+
+@utility h-stage {
+  height: calc(100svh - 4.75rem);
+}
+
+@utility top-stage {
+  top: 4.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .practice-scrub {
+    display: none !important;
+  }
+
+  .practice-list {
+    display: block !important;
+  }
+}
