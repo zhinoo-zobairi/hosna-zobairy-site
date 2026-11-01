@@ -51,13 +51,3 @@
 @utility top-stage {
   top: 4.75rem;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .practice-scrub {
-    display: none !important;
-  }
-
-  .practice-list {
-    display: block !important;
-  }
-}
