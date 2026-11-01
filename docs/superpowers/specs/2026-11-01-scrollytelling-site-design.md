@@ -75,8 +75,8 @@ Copy = {
   // new
   statement: string;  // seeded from the second sentence of vitaBody (existing text, no new claims)
   visit: string;      // chapter title, e.g. "Visit"
-  form: { name, phone, procedure, day, dayAny, daySat, daySun, dayTue, note,
-          submit, sending, success, rateLimited, error, consent: string };
+  form: { name, phone, procedure, procedureOther, day, dayAny, daySat, daySun, dayTue,
+          note, submit, sending, success, invalid, rateLimited, error, consent: string };
 }
 ```
 
