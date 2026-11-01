@@ -54,7 +54,7 @@ export async function submitAppointmentCore(
 
   // The request is saved. A failed email leaves email_sent = false for the admin to see.
   try {
-    if (await sendClinicEmail(row)) {
+    if (await sendClinicEmail()) {
       await sql`update appointment_requests set email_sent = true where id = ${row.id}`;
     }
   } catch (err) {

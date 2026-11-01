@@ -1,25 +1,17 @@
-/** Notifies the clinic of a new appointment request through Resend's HTTP API (no SDK). */
+/**
+ * Pings the clinic about a new appointment request through Resend's HTTP API (no SDK).
+ * The email carries no patient data: details stay in the database, where the 12-month purge reaches them.
+ */
 
 const RESEND_URL = "https://api.resend.com/emails";
 const TIMEOUT_MS = 5000;
-
-export type ClinicEmailRequest = {
-  id: string;
-  created_at: Date | string;
-  name: string;
-  phone: string;
-  procedure: string;
-  preferred_day: string;
-  note: string | null;
-  lang: string;
-};
 
 let warnedMissingEnv = false;
 
 const env = (key: string) => process.env[key]?.trim() || undefined;
 
-/** True when Resend accepted the email. Never throws and never logs patient data. */
-export async function sendClinicEmail(row: ClinicEmailRequest): Promise<boolean> {
+/** True when Resend accepted the email. Never throws. */
+export async function sendClinicEmail(): Promise<boolean> {
   const apiKey = env("RESEND_API_KEY");
   const from = env("MAIL_FROM");
   const to = env("CLINIC_EMAIL");
@@ -37,8 +29,8 @@ export async function sendClinicEmail(row: ClinicEmailRequest): Promise<boolean>
       body: JSON.stringify({
         from,
         to,
-        subject: `New appointment request — ${row.name.replace(/\s+/g, " ")}`,
-        text: emailText(row),
+        subject: "New appointment request",
+        text: emailText(),
       }),
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
@@ -53,18 +45,8 @@ export async function sendClinicEmail(row: ClinicEmailRequest): Promise<boolean>
   }
 }
 
-function emailText(row: ClinicEmailRequest): string {
-  const received = row.created_at instanceof Date ? row.created_at.toISOString() : row.created_at;
-  return [
-    "New appointment request",
-    "",
-    `Name: ${row.name}`,
-    `Phone: ${row.phone}`,
-    `Procedure: ${row.procedure}`,
-    `Preferred day: ${row.preferred_day}`,
-    `Note: ${row.note || "-"}`,
-    `Language: ${row.lang}`,
-    `Received: ${received}`,
-    `Request id: ${row.id}`,
-  ].join("\n");
+function emailText(): string {
+  const site = env("BETTER_AUTH_URL")?.replace(/\/+$/, "");
+  const where = site ? `${site}/admin` : "the admin page of the site";
+  return `A new appointment request arrived. Open ${where} to see it.`;
 }
