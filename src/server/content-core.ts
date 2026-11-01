@@ -31,13 +31,17 @@ export async function getContentForEditCore(
   return { content, versions };
 }
 
-/** Every save is a new row; all rows are kept. */
+/** Every save is a new row; all rows are kept. The first save also stores the bundled text as a 'seed' row, so it stays restorable. */
 export async function saveContentCore(
   sql: Sql,
   content: SiteContent,
   createdBy: string,
 ): Promise<{ ok: true; id: number }> {
   const valid = siteContentSchema.parse(content);
+  await sql`
+    insert into content_versions (created_by, content)
+    select 'seed', ${JSON.stringify(defaultContent)}::jsonb
+    where not exists (select 1 from content_versions)`;
   const [row] = await sql<{ id: number }>`
     insert into content_versions (created_by, content)
     values (${createdBy}, ${JSON.stringify(valid)}::jsonb)

@@ -46,9 +46,23 @@ test("save then get returns the saved content", async () => {
   assert.deepEqual(await getLatestContent(sql), edited);
   const { versions } = await getContentForEditCore(sql);
   assert.deepEqual(
-    versions.map((v) => [v.id, v.created_by]),
-    [[saved.id, "admin@example.test"]],
+    versions.map((v) => v.created_by),
+    ["admin@example.test", "seed"],
   );
+  assert.equal(versions[0].id, saved.id);
+});
+
+test("the first save keeps the original text as a restorable seed version", async () => {
+  const { sql } = await createTestDb();
+  const edited = structuredClone(defaultContent);
+  edited.en.line = "Edited line";
+  await saveContentCore(sql, edited, "admin@example.test");
+  await saveContentCore(sql, edited, "admin@example.test");
+  const { versions } = await getContentForEditCore(sql);
+  const seeds = versions.filter((v) => v.created_by === "seed");
+  assert.equal(seeds.length, 1);
+  await restoreContentVersionCore(sql, seeds[0].id, "admin@example.test");
+  assert.deepEqual(await getLatestContent(sql), defaultContent);
 });
 
 test("an invalid save is rejected and stores nothing", async () => {
