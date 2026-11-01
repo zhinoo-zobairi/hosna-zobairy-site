@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { copy, INSTAGRAM, LANG_KEY, LanguageMenu, PHONE, stills, type Lang } from "./index";
+import { INSTAGRAM, LANG_KEY, PHONE, PROCEDURE_SLUGS, type Lang } from "@/content/constants";
+import { defaultContent } from "@/content/default";
+import { stills } from "@/content/stills";
+import { LanguageMenu } from "./index";
 
-const slugs = ["rhinoplasty", "sinus", "sleep-apnea", "ear", "blepharoplasty", "face", "botox"] as const;
+const copy = defaultContent;
 
 export const Route = createFileRoute("/practice/$slug")({
   loader: ({ params }) => {
-    const index = slugs.indexOf(params.slug as (typeof slugs)[number]);
+    const index = PROCEDURE_SLUGS.indexOf(params.slug as (typeof PROCEDURE_SLUGS)[number]);
     if (index < 0) throw notFound();
     return { index };
   },
