@@ -27,7 +27,8 @@ export const Route = createFileRoute("/admin")({
 
 function errorText(error: unknown): string {
   const message = error instanceof Error ? error.message : String(error);
-  return message === UNAUTHORIZED ? "Your session has ended." : `Something went wrong: ${message}`;
+  // Shown before sign-in, so never echo server details (hostnames, config names). They are in the server logs.
+  return message === UNAUTHORIZED ? "Your session has ended." : "Something went wrong. Try again in a minute.";
 }
 
 const navLink = "text-muted hover:text-ink";
