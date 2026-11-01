@@ -12,8 +12,8 @@ export function Training({ text, lang, motion }: ChapterProps) {
     <section aria-label={text.observership} className="border-t border-line px-6 py-20 md:px-12 md:py-28 lg:px-20">
       <h2 className={kicker(ku)}>{text.observership}</h2>
       <ol className="mt-6 max-w-3xl">
-        {text.observerships.map((row) => (
-          <Row key={`${row.year}-${row.place}`} year={row.year} place={row.place} ku={ku} />
+        {text.observerships.map((row, index) => (
+          <Row key={index} year={row.year} place={row.place} ku={ku} />
         ))}
       </ol>
     </section>
@@ -56,7 +56,7 @@ function TrainingPinned({ text, ku }: { text: Copy; ku: boolean }) {
             const reached = ramp(line * rows.length - index, 0, 0.5);
             return (
               <Row
-                key={`${row.year}-${row.place}`}
+                key={index}
                 year={row.year}
                 place={row.place}
                 ku={ku}

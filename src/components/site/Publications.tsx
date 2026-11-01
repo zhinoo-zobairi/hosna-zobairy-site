@@ -40,7 +40,7 @@ export function Publications({ text, lang, motion, papers }: ChapterProps & { pa
       <ol ref={listRef} className="mt-6 max-w-3xl lg:mt-0">
         {papers.map((paper, index) => (
           <li
-            key={paper.title}
+            key={index}
             className="flex min-w-0 gap-4 border-t border-line py-5 transition-[opacity,transform] duration-700 ease-out sm:gap-8"
             style={{
               opacity: hidden ? 0 : 1,

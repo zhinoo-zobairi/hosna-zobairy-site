@@ -19,8 +19,8 @@ export function Visit({ text, lang }: ChapterProps) {
           {text.vitaBody}
         </p>
         <dl className="mt-10 max-w-xl">
-          {text.facts.map((fact) => (
-            <div key={fact.label} className="flex flex-col gap-1 border-t border-line py-5 sm:flex-row sm:gap-8">
+          {text.facts.map((fact, index) => (
+            <div key={index} className="flex flex-col gap-1 border-t border-line py-5 sm:flex-row sm:gap-8">
               <dt className={`w-36 shrink-0 ${kicker(ku)}`}>{fact.label}</dt>
               <dd className={`text-base text-ink ${sans(ku)}`}>
                 {fact.href ? (
