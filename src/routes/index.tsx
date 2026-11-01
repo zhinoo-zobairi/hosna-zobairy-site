@@ -8,6 +8,7 @@ import { Statement } from "@/components/site/Statement";
 import { Practice } from "@/components/site/Practice";
 import { Training } from "@/components/site/Training";
 import { Publications } from "@/components/site/Publications";
+import { Visit } from "@/components/site/Visit";
 import { useLang } from "@/components/site/use-lang";
 
 export const Route = createFileRoute("/")({
@@ -39,6 +40,7 @@ function Home() {
         <Practice {...chapter} />
         <Training {...chapter} />
         <Publications {...chapter} papers={content.papers} />
+        <Visit {...chapter} />
       </main>
     </div>
   );
