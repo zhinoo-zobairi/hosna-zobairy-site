@@ -13,7 +13,7 @@ export const Route = createRootRoute({
       { title: APP_NAME },
       {
         name: "description",
-        content: "Dr. Hosna Zobairy — nose and facial plastic surgery in Sanandaj.",
+        content: "Dr. Hosna Zobairy — nose and facial plastic surgery in Sna.",
       },
       { name: "theme-color", content: "#f3f1ee" },
     ],

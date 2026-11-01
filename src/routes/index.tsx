@@ -91,7 +91,7 @@ export const copy = {
     mark: "Dr. Zobairy",
     instagram: "Instagram",
     book: "Book appointment",
-    place: "Sanandaj",
+    place: "Sna",
     name: "Dr. Hosna Zobairy",
     line: "Nose and facial plastic surgery",
     cred: "Board-certified · Ear, nose and throat",
@@ -144,9 +144,9 @@ export const copy = {
     ],
     vita: "Vita",
     vitaBody:
-      "Dr. Hosna Zobairy is a board-certified ear, nose and throat surgeon in Sanandaj. Her practice is the nose and the face: shape and breathing, the sinuses, sleep, the ear, the eyelids, and facial rejuvenation.",
+      "Dr. Hosna Zobairy is a board-certified ear, nose and throat surgeon in Sna. Her practice is the nose and the face: shape and breathing, the sinuses, sleep, the ear, the eyelids, and facial rejuvenation.",
     facts: [
-      { label: "Place", value: "Sanandaj, Abidar" },
+      { label: "Place", value: "Sna, Abidar" },
       { label: "Visit", value: "Saturday, Sunday, Tuesday · 4 to 8" },
       { label: "Telephone", value: "08733284829", href: `tel:${PHONE}` },
       { label: "Medical council", value: "128359" },

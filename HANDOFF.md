@@ -12,6 +12,7 @@ Keep a normal layout on phones. Pinned scroll is a desktop behavior. Respect `pr
 
 ## What is already decided
 
+- Call the city Sna, never Sanandaj (Kurdish: سنە).
 - English first, then Kurdish (Sorani). No Persian. Kurdish sets `dir="rtl"`. Language key: `localStorage` `zobairy-lang`.
 - Minimal editorial page. Colors in `src/styles.css`: paper `#f3f1ee`, ink `#1c1917`. Fonts: Newsreader, Outfit, Noto Naskh Arabic, Noto Sans Arabic.
 - Header: mark, Instagram, Vita, EN/KU menu, outlined Book appointment. Phone `+988733284829`. Instagram `https://www.instagram.com/dr.hosnazobairy/`.
@@ -19,7 +20,7 @@ Keep a normal layout on phones. Pinned scroll is a desktop behavior. Respect `pr
 - Practice is an accordion in `src/routes/index.tsx`. One item open at a time. Each row has a still from `public/practice/`. The open row's photo is larger. The owner found an earlier sticky split and full-bleed stills poorly organized. Stills are atmospheric, not patient results and not surgery.
 - Procedures: rhinoplasty and septorhinoplasty, sinus surgery, sleep apnea, ear surgery, blepharoplasty, facial rejuvenation, Botox (lines, migraine, blepharospasm). Do not add "this is not an operation."
 - `/practice/$slug` pages exist. Read more buttons were removed. Do not put them back unless asked.
-- Vita: Sanandaj, Abidar; Saturday, Sunday, Tuesday, 4 to 8; telephone 08733284829; medical council 128359.
+- Vita: Sna, Abidar; Saturday, Sunday, Tuesday, 4 to 8; telephone 08733284829; medical council 128359.
 - Observerships, hospital then town then country. Kurdish for Ankara is ئەنکەرە.
   - 2026 St. Joseph’s Health Centre, Toronto, Canada
   - 2026 Charité – Universitätsmedizin Berlin, Germany
