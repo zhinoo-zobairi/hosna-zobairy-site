@@ -1,6 +1,6 @@
 # Dr. Hosna Zobairy site — scrollytelling, backend, hosting
 
-Approved in chat on 2026-11-01. Read `HANDOFF.md` for content rules (Sna not Sanandaj, no invented papers, EN then KU, KU is `dir="rtl"`).
+Approved in chat on 2026-11-01. Read `HANDOFF.md` for content rules (Sine, never Sanandaj or Sna; Awyer, never Abidar; no invented papers, EN then KU, KU is `dir="rtl"`).
 
 ## Goal
 
@@ -195,6 +195,6 @@ Also remove `scripts/browser-smoke*` (its verdicts check Grok branding); QA uses
 2. Add Neon from the Marketplace (sets `DATABASE_URL`).
 3. Resend account and API key.
 4. Set env vars and deploy to the `*.vercel.app` URL.
-5. Dr. Zobairy opens the URL from Sna. If it doesn't load, stop and revisit hosting.
+5. Dr. Zobairy opens the URL from Sine. If it doesn't load, stop and revisit hosting.
 6. Buy hosnazobairy.com, add it in Vercel, verify the domain in Resend, switch to Pro.
 7. Create admin accounts with `scripts/create-admin.mjs` against production.

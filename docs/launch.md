@@ -2,7 +2,7 @@
 
 The steps to take the site from this repo to hosnazobairy.com. Steps marked **(you)** need your accounts, payment or secrets. Claude can't do those.
 
-Do them in order. Step 6 is the go/no-go: if the site doesn't load from Sna, stop before buying the domain.
+Do them in order. Step 6 is the go/no-go: if the site doesn't load from Sine, stop before buying the domain.
 
 ## 1. Push the code to a private GitHub repo
 
@@ -52,7 +52,7 @@ The script asks for the password twice and doesn't show what you type. It needs 
 
 Repeat the command for Dr. Zobairy's own account. Then sign in at `https://<your-project>.vercel.app/admin`.
 
-## 6. Test from Sna (Dr. Zobairy) — go/no-go
+## 6. Test from Sine (Dr. Zobairy) — go/no-go
 
 Send her the `vercel.app` link. She checks it on both mobile data and home Wi-Fi, **without a VPN**:
 

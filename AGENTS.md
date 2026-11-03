@@ -2,7 +2,7 @@
 
 Portfolio and appointment site for Dr. Hosna Zobairy, hosted on Vercel.
 
-- Content rules: `HANDOFF.md` (Sna not Sanandaj, EN then KU, KU is `dir="rtl"`, never invent papers, schools or years).
+- Content rules: `HANDOFF.md` (Sine, never Sanandaj or Sna; Awyer, never Abidar; EN then KU, KU is `dir="rtl"`, never invent papers, schools or years).
 - Design and decisions: `docs/superpowers/specs/2026-11-01-scrollytelling-site-design.md`.
 
 ## Stack
