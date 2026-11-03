@@ -29,6 +29,10 @@ test("procedures in the wrong order are rejected", () => {
   assert.equal(siteContentSchema.safeParse(swapped).success, false);
 });
 
-test("the default text says Sna, never Sanandaj", () => {
-  assert.equal(JSON.stringify(defaultContent).includes("Sanandaj"), false);
+test("the default text says Sine and Awyer, never Sanandaj, Sna or Abidar", () => {
+  const text = JSON.stringify(defaultContent);
+  for (const wrong of [/Sanandaj/, /\bSna\b/, /Abidar/]) {
+    assert.equal(wrong.test(text), false, `found ${wrong}`);
+  }
+  assert.equal(defaultContent.en.place, "Sine");
 });

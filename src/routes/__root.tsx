@@ -2,7 +2,7 @@ import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-r
 import appCss from "../styles.css?url";
 
 const APP_NAME = "Dr. Hosna Zobairy";
-const DESCRIPTION = "Dr. Hosna Zobairy — nose and facial plastic surgery in Sna.";
+const DESCRIPTION = "Dr. Hosna Zobairy — nose and facial plastic surgery in Sine.";
 
 export const Route = createRootRoute({
   head: () => ({
